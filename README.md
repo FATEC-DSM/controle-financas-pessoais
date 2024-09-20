@@ -1,11 +1,21 @@
 # controle-financas-pessoais
-
 Plataforma web que permita aos usuários gerenciar suas finanças pessoais de forma eficiente, fornecendo ferramentas para o controle de receitas, despesas, orçamento, e relatórios financeiros.
+
+## Breve resumo do gitflow
+- Qualquer branch que for criar para fazer sua tarefa, tem que ser a partir da develop `develop`
+- Geralmente só usamos 3 branches `develop`, `feature`, `bugfix` ou `hotfix`
+- Basicamente a bugfix é feita para correções na develop, ou seja, ainda não saiu para produção
+- Fluxo de criação de trabalho
+  - `develop -> feature-*oq-sera-feito`
+  - Trabalha na `feature` e se quiser quebrar em mais tarefas, crie branchs `task-*nome-task` para distribuir melhor e ir fazendo merges para sua feature
+- Fluxo para publicar o seu trabalho
+  - Antes de fazer o merge da sua `feature` para a `develop`, envie o link do pull request no grupo criado no whatsapp (lembrando que é um trabalho colaborativo e é importante que todos saibam o que está sendo feito)
+  - Se você criou uma `task`, o flow é parecido `task-exemplo -> feature-exemplo **Mandar código do pull request no grupo** -> develop`
+- Enfim, uma vez na semana, jogar todas as mudanças da `develop` para a `main` 
 
 # Git Flow
 
 ## Índice
-
 1. [Branches](#branches)
 2. [Ambientes](#ambientes)
 3. [Convenções de nome de branch](#convenções-de-nome-de-branch)
