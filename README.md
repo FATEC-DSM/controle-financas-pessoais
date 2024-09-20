@@ -224,10 +224,7 @@ git branch -d feature-you-will-do
 - Deve ser usado apenas para corrigir bugs em produção.
 - A branch de hotfix deve começar da branch master e ser mesclada de volta para master e development.
 - A branch de hotfix pode começar a partir da branch release e deve ser mesclada de volta para release, master e development.
-- **Importante**: o nome da branch de hotfix contém o número completo da
-
-versão.
-
+- **Importante**: o nome da branch de hotfix contém o número completo da versão.
 - **Importante**: o número da versão será incrementado no final da correção.
 
 1. Crie a branch de hotfix a partir do estado atual da branch master:
@@ -313,10 +310,9 @@ Preste atenção ao Feature Branching com Pull Requests.
 - Cheatsheet git-flow de Vincent Driessen (ru)
 
 ## Leituras de apoio
-
+- [Referência desse Gitflow](https://github.com/valor-software/valor-style-guides/blob/master/gitflow/readme.md)
 - [Semantic Versioning 2.0.0](https://semver.org/)
 - [Git cheat sheet](https://www.git-tower.com/blog/git-cheat-sheet)
 - [Ajuda do GitHub: colaborando com usuários](https://help.github.com/articles/collaborating-with-issues-and-pull-requests/)
-```
 
 
