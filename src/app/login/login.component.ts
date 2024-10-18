@@ -1,9 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
-import { response } from 'express';
 
 type Login = {
   email: String;
