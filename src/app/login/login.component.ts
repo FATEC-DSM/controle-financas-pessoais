@@ -55,6 +55,10 @@ export class LoginComponent {
     this.router.navigate(['/recover']); // Redireciona para o dashboard
   }
 
+  createAccount() {
+    this.router.navigate(['/register-user']); // Redireciona para o dashboard
+  }
+
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
     this.passInputElement.nativeElement.type = this.showPassword

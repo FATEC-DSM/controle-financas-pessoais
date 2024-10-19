@@ -1,0 +1,18 @@
+.form-container {
+  max-width: 40rem;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.progress {
+  max-width: 150px;
+}
+
+.pass-roles {
+  font-size: .9rem;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 1rem 0;
+}
