@@ -1,0 +1,171 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Garante que o body ocupe a altura total da viewport */
+    margin: 0; /* Remove margens padrões */
+}
+
+
+/* Header */
+header {
+    position: fixed;
+    background-color: var(--azul-bg-color);
+    padding: 20px;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.left ion-icon {
+    margin-right: 20px;
+    font-size: 39px;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+.left ion-icon:hover {
+    color: var(--verde-escuro);
+}
+
+.left h3 {
+    color: var(--verde-escuro);
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.sair-btn {
+    padding: 8px 12px;
+    
+    background-color: var(--verde-escuro);
+    text-decoration: none;
+    color: #fff;
+    border-radius: 3px;
+    transition: 0.3s all;
+}
+
+.sair-btn:hover {
+    background-color: var(--verde-claro);
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    margin-top: 70px;
+    background-color: var(--azul-escuro-bg-color);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out; /* Transição suave */
+    transform: translateX(0); /* Posição padrão */
+}
+
+#check:checked ~ .sidebar {
+    transform: translateX(-250px); /* Esconde o sidebar */
+}
+
+.sidebar .image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    margin-top: 30px;
+}
+
+/* Cabeçalho do Sidebar */
+.cabecalho-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.cabecalho-sidebar h2 {
+    color: #fff;
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+/* Opções do Sidebar */
+.opcoes-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza os itens horizontalmente */
+    width: 100%;
+    gap: 15px; /* Espaçamento entre as opções */
+    padding: 25px 0;
+}
+
+.opcoes-sidebar a {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: transparent;
+    width: 100%; /* Ajusta a largura dos links */
+    transition: background-color 0.3s ease;
+}
+
+.opcoes-sidebar a:hover {
+    background-color: var(--verde-escuro);
+}
+
+.opcoes-sidebar ion-icon {
+    padding-right: 10px;
+    font-size: 20px;
+}
+
+/* Checkbox e botão do menu */
+#check {
+    display: none; /* Esconde o checkbox */
+}
+
+main {
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center; /* Centraliza o conteúdo no centro */
+    padding: 20px; /* Opcional: espaço interno */
+    background-color: #f5f5f5; /* Exemplo de cor de fundo */
+}
+.container h1{
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+.progress{
+    margin-bottom: 20px;
+}
+.titulos-barra-progresso{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.titulos-barra-progresso h2{
+    font-size: 22px;
+}
+.container{
+    width: 80%;
+}
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px; /* Ajusta largura em telas menores */
+    }
+
+    .opcoes-sidebar a {
+        font-size: 14px; /* Reduz fonte em telas menores */
+    }
+}
