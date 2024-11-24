@@ -1,0 +1,68 @@
+.historicoTransacoes {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+.cardTrasacoes {
+    background: rgb(253, 253, 253);
+    min-width: 49%;
+    max-width: 100%;
+    margin: 5px;
+    padding: 10px;
+}
+
+.headerCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    height: 50px;
+}
+
+.headerCard button {
+    border: 1px solid transparent;
+    width: 115px;
+    height: 24px;
+    border-radius: 10px;
+    color: white;
+   
+}
+
+.headerCard h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+
+.btn-entradas {
+    background: #00B93C;
+}
+
+.btn-saidas {
+    background: #CC092F;
+}
+
+.filtrosCard {
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: baseline;
+    gap: 5px;
+}
+
+.filtrosCard input {
+    border: 1px solid #001A4B; 
+    background: white;
+    color: #001A4B;
+    border-radius: 14px;
+    max-width: 130px;
+    width: 100%;
+}
+
+.filtrosCard input:focus {
+    background: #001A4B;
+    color: white;
+}
