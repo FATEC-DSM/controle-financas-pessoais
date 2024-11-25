@@ -8,10 +8,15 @@
 
 .cardTrasacoes {
     background: rgb(253, 253, 253);
-    min-width: 49%;
-    max-width: 100%;
+    width: 100%;
     margin: 5px;
     padding: 10px;
+}
+
+@media (min-width: 800px) {
+    .cardTrasacoes {
+        width: 48%; /* Ajusta a largura para 48% em telas maiores */
+    }
 }
 
 .headerCard {
@@ -33,7 +38,7 @@
 
 .headerCard h1 {
     margin: 0;
-    font-size: 32px;
+    font-size: 24px;
 }
 
 
@@ -54,6 +59,7 @@
 }
 
 .filtrosCard input {
+    font-size: 16px;
     border: 1px solid #001A4B; 
     background: white;
     color: #001A4B;
