@@ -1,0 +1,18 @@
+.alerta {
+  position: absolute !important;
+  top: 20px;
+  right: 25px;
+  opacity: 0;
+  transition: all ease .3s;
+}
+
+.alerta.is-active {
+  opacity: 1;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px !important;
+}
+
+.image {}

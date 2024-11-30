@@ -2,16 +2,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Roboto:wght@100;300;400;700&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  min-height: 100dvh;
 }
 
 :root {
-    --azul-bg-color: #001A4B;
-    --azul-escuro-bg-color: #000f2b;
-    --azul-claro: #0C44B0;
-    --verde-escuro: #00B93C;
-    --verde-claro: #4AD778;
+  --azul-bg-color: #001A4B;
+  --azul-escuro-bg-color: #000f2b;
+  --azul-claro: #0C44B0;
+  --verde-escuro: #00B93C;
+  --verde-claro: #4AD778;
+}
+
+.btn-primary {
+  background-color: var(--azul-claro) !important;
+  color: #fff;
 }

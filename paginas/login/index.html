@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../global.css">
+  <link rel="stylesheet" href="estilo.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <title>Login</title>
+</head>
+
+<body>
+  <div data-item="login" class="p-4 mx-auto container form-container position-relative">
+
+    <form method="post" onsubmit="enviarForm(event)">
+      <h3 class="mb-3">Login</h3>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" id="email">
+      </div>
+
+      <div>
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" name="senha" class="form-control" id="senha">
+      </div>
+
+      <div class="d-grid gap-3 mt-3">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="button" class="btn btn-light" onclick="navegar('cadastro-usuario')">Criar
+          conta</button>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">
+            Lembrar-me
+          </label>
+        </div>
+        <button type="button" class="btn btn-light" onclick="navegar('recuperar-senha')">Esqueci a
+          senha</button>
+      </div>
+    </form>
+
+    <div data-item="alerta" class="alert alert-warning flex-grow-1 alerta" role="alert">
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="/services/navegacao.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
