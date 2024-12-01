@@ -6,8 +6,6 @@ async function enviarForm(event) {
   const email = formData.get('email')
   const senha = formData.get('senha')
 
-  console.log(email, senha)
-
   try {
     const headers = new Headers({
       'Content-Type': 'application/json',
@@ -22,6 +20,8 @@ async function enviarForm(event) {
     const data = await response.json()
 
     if (data.message) showAlerta(data.message)
+    console.log(data)
+    guardarSessao(data.body)
 
     if (data.ok) {
       window.location = '/'
@@ -40,4 +40,12 @@ function showAlerta(mensagem) {
     containerLogin.classList.toggle('is-active')
     containerLogin.innerHTML = ''
   }, 3000)
+}
+
+function guardarSessao(dados) {
+  //paliativo enquanto o controle de sessão não estiver maduro
+  window.localStorage.setItem(
+    'sessao',
+    JSON.stringify({ email: dados.email, createdAt: new Date().getTime() })
+  )
 }
