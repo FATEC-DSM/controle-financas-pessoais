@@ -1,0 +1,74 @@
+.historicoTransacoes {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+.cardTrasacoes {
+    background: rgb(253, 253, 253);
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+}
+
+@media (min-width: 800px) {
+    .cardTrasacoes {
+        width: 48%; /* Ajusta a largura para 48% em telas maiores */
+    }
+}
+
+.headerCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    height: 50px;
+}
+
+.headerCard button {
+    border: 1px solid transparent;
+    width: 115px;
+    height: 24px;
+    border-radius: 10px;
+    color: white;
+   
+}
+
+.headerCard h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+
+.btn-entradas {
+    background: #00B93C;
+}
+
+.btn-saidas {
+    background: #CC092F;
+}
+
+.filtrosCard {
+    padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: baseline;
+    gap: 5px;
+}
+
+.filtrosCard input {
+    font-size: 16px;
+    border: 1px solid #001A4B; 
+    background: white;
+    color: #001A4B;
+    border-radius: 14px;
+    max-width: 130px;
+    width: 100%;
+}
+
+.filtrosCard input:focus {
+    background: #001A4B;
+    color: white;
+}
