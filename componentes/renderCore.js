@@ -10,7 +10,7 @@ function renderCore() {
           <h3>Dinheirize</span></h3>
         </div>
         <div class="right">
-          <a href="#" class="sair-btn">Sair</a>
+          <a href="#" class="sair-btn" onclick="window.localStorage.removeItem('sessao')">Sair</a>
         </div>
       </header>
       <!-- header final -->

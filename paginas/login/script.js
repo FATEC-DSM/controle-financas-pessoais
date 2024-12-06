@@ -45,9 +45,12 @@ function showAlerta(mensagem) {
 }
 
 function guardarSessao(dados) {
-  //paliativo enquanto o controle de sessão não estiver maduro
   window.localStorage.setItem(
     'sessao',
-    JSON.stringify({ email: dados.email, createdAt: new Date().getTime() })
+    JSON.stringify({
+      user: dados.Id_user,
+      email: dados.Email,
+      createdAt: new Date().getTime(),
+    })
   )
 }
