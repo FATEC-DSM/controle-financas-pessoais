@@ -23,16 +23,19 @@ async function enviarForm(event) {
       'Content-Type': 'application/json',
     })
 
-    const response = await fetch('http://localhost:8080/create-user', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        name: primeiroNome,
-        lastName: ultimoNome,
-        email,
-        password: senha,
-      }),
-    })
+    const response = await fetch(
+      'https://backend-controle-financas-pessoais.vercel.app/create-user',
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          name: primeiroNome,
+          lastName: ultimoNome,
+          email,
+          password: senha,
+        }),
+      }
+    )
 
     const data = await response.json()
 
