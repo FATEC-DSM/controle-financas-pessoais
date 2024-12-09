@@ -63,7 +63,7 @@ function showAlerta(mensagem) {
     if (success) {
       window.location.href = '/paginas/login'
     }
-  }, 3000)
+  }, 1000)
 }
 
 function verSenha(event, primeiraSenha) {

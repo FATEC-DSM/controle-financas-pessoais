@@ -1,22 +1,34 @@
-// window.onload = carregarMovimentos
+window.onload = carregarMovimentos
 
 async function carregarMovimentos() {
   try {
     let sessao = window.localStorage.getItem('sessao')
-    sessao = JSON.stringify(sessao)
+    sessao = JSON.parse(sessao)
 
     let id = sessao.user
 
-    const response = await fetch(
-      `https://backend-controle-financas-pessoais.vercel.app/transactions/${id}`
-    )
+    renderCarregando()
 
-    const { transactions } = await response.json()
+    const b = 'https://backend-controle-financas-pessoais.vercel.app'
+    const a = 'http://localhost:8080'
 
-    if (!transactions.length) {
+    let hoje = new Date().toISOString().split('T')[0]
+
+    const filtro = new URLSearchParams({
+      minDate: '1970-01-01',
+      maxDate: hoje,
+    }).toString()
+
+    const response = await fetch(`${a}/transactions/${id}?${filtro}`)
+
+    const json = await response.json()
+
+    if (!json.body.transactions.length) {
+      return renderPrimeiraTransacao()
     }
+
+    renderTransacoes(json.body.transactions)
   } catch (error) {
-    showAlerta('Não foi possível carregar as transações')
     console.error(error)
   }
 }
@@ -32,7 +44,7 @@ function showAlerta(mensagem) {
   }, 3000)
 }
 
-function modalTransacao() {
+function renderModalTransacao() {
   const main = document.querySelector('main')
 
   main.innerHTML += `
@@ -80,7 +92,6 @@ function modalTransacao() {
   </div>
   `
 }
-modalTransacao()
 
 async function criarTransacao(event) {
   event.preventDefault()
@@ -127,4 +138,69 @@ async function criarTransacao(event) {
   } catch (error) {
     console.error(error)
   }
+}
+
+function renderPrimeiraTransacao() {
+  document.querySelector('main').innerHTML = `
+    <div>
+      <h2>Crie a sua primeira transação</h2>
+      <p>
+        Aqui, sua saúde financeira é prioridade. O Dinherize é a ferramenta ideal para quem quer entender melhor seus
+        gastos e alcançar o controle financeiro de forma simples e inteligente. Nossa plataforma organiza suas despesas,
+        identifica padrões e oferece insights personalizados para otimizar sua vida financeira.
+      </p>
+      <p>
+        Com o Dinherize, você transforma números em ações que fazem a diferença. Comece hoje mesmo a planejar,
+        economizar e realizar seus objetivos.
+      </p>
+      <p>Dinherize: seu dinheiro, suas escolhas, sua evolução!</p>
+    </div>
+    <button class="btn btn-primary" onclick="criarTransacao()" data-bs-toggle="modal"
+      data-bs-target="#modalTransacao">Criar
+      a minha primeira transação
+    </button>
+    `
+  renderModalTransacao()
+}
+
+function renderCarregando() {
+  document.querySelector('main').innerHTML = `
+    <div class="d-flex justify-content-center align-items-center">
+      <div class="spinner-border me-3" role="status"></div>
+      <span class="sr-only">Carregando movimentações...</span>
+    </div>
+  `
+}
+
+async function renderTransacoes(transacoes) {
+  document.querySelector('main').innerHTML = `
+    <div>
+      <button type="button" onclick="mostraModalMetas()" id="#modalMetas" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalMetas">
+        CRIAR CATEGORIA
+      </button>
+    </div>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    ${categorias.map(
+      (categoria, i) => `
+        <tr>
+          <td>${i}</td>
+          <td>${categoria.Description}</td>
+          <td>${categoria.Name}</td>
+        </tr>
+      `
+    )}
+    </tbody>
+  </table>
+  `
+  renderModalCategoria()
 }

@@ -22,10 +22,8 @@ function renderCore() {
         </div>
         <div class="opcoes-sidebar">
           <a href="/index.html"><ion-icon name="home-outline"></ion-icon><span>Home</span></a>
-          <a href="/paginas/metas.html"><ion-icon name="rocket-outline"></ion-icon></ion-icon><span>Metas</span></a>
-          <a href="#"><ion-icon name="wallet-outline"></ion-icon><span>Fluxo de caixa</span></a>
-          <a href="#"><ion-icon name="bar-chart-outline"></ion-icon><span>Relatório</span></a>
-          <a href="/paginas/categoria.html"><ion-icon name="bar-chart-outline"></ion-icon><span> Categoria </span></a>
+          <a href="/paginas/metas"><ion-icon name="rocket-outline"></ion-icon></ion-icon><span>Metas</span></a>
+          <a href="/paginas/categoria"><ion-icon name="bar-chart-outline"></ion-icon><span> Categoria </span></a>
         </div>
       </div>
     `

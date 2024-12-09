@@ -24,3 +24,155 @@ body {
   background-color: var(--azul-claro) !important;
   color: #fff;
 }
+
+body {
+  /* Garante que o body ocupe a altura total da viewport */
+  margin: 0;
+  /* Remove margens padrões */
+
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: 70px 1fr;
+}
+
+main {
+  padding: 2rem;
+}
+
+main h2 {
+  font-weight: bolder;
+  margin-bottom: 1rem;
+}
+
+/* Header */
+header {
+  background-color: var(--azul-bg-color);
+  padding: 20px;
+  height: 100%;
+  max-height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+header .left {
+  display: flex;
+  align-items: center;
+}
+
+header .left ion-icon {
+  margin-right: 20px;
+  font-size: 39px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+header .left ion-icon:hover {
+  color: var(--verde-escuro);
+}
+
+header .left h3 {
+  color: var(--verde-escuro);
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+header .sair-btn {
+  padding: 8px 12px;
+
+  background-color: var(--verde-escuro);
+  text-decoration: none;
+  color: #fff;
+  border-radius: 3px;
+  transition: 0.3s all;
+}
+
+header .sair-btn:hover {
+  background-color: var(--verde-claro);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 300px;
+  height: 100%;
+  background-color: var(--azul-escuro-bg-color);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+  /* Transição suave */
+  transform: translateX(0);
+  /* Posição padrão */
+}
+
+#check:checked~.sidebar {
+  transform: translateX(-250px);
+  /* Esconde o sidebar */
+}
+
+.sidebar .image {
+  aspect-ratio: 1/1;
+  width: 80px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  object-fit: cover;
+  margin-top: 30px;
+}
+
+/* Cabeçalho do Sidebar */
+/* .cabecalho-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+} */
+
+.cabecalho-sidebar h2 {
+  color: #fff;
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+/* Opções do Sidebar */
+.opcoes-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Centraliza os itens horizontalmente */
+  width: 100%;
+  gap: 15px;
+  /* Espaçamento entre as opções */
+  padding: 25px 0;
+}
+
+.opcoes-sidebar a {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #fff;
+  background-color: transparent;
+  width: 100%;
+  /* Ajusta a largura dos links */
+  transition: background-color 0.3s ease;
+}
+
+.opcoes-sidebar a:hover {
+  background-color: var(--verde-escuro);
+}
+
+.opcoes-sidebar ion-icon {
+  padding-right: 10px;
+  font-size: 20px;
+}
+
+/* Checkbox e botão do menu */
+#check {
+  display: none;
+  /* Esconde o checkbox */
+}
