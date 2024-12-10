@@ -21,8 +21,8 @@ async function carregarMovimentos() {
       maxDate: hoje,
     }).toString()
 
-    const response = await fetch(`${a}/transactions/${id}?${filtro}`)
-    const responseCategorias = await fetch(`${a}/categories/${id}`)
+    const response = await fetch(`${b}/transactions/${id}?${filtro}`)
+    const responseCategorias = await fetch(`${b}/categories/${id}`)
 
     const json = await response.json()
     const jsonCategorias = await responseCategorias.json()
@@ -40,7 +40,7 @@ async function carregarMovimentos() {
   }
 }
 
-function renderModalTransacao(categorias) {
+function renderModalTransacao() {
   document.querySelector('[data-place="modal"]').innerHTML += `
     <div class="modal-body">
     <div class="modal fade" id="modalTransacao" tabindex="-1" aria-labelledby="modalMetasLabel" aria-hidden="true">
@@ -111,7 +111,7 @@ async function criarTransacao(event) {
     const b = 'https://backend-controle-financas-pessoais.vercel.app'
     const a = 'http://localhost:8080'
 
-    const response = await fetch(a + '/transactions', {
+    const response = await fetch(b + '/transactions', {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -197,6 +197,10 @@ async function renderTransacoes(transacoes) {
         data-bs-target="#modalTransacao">
         Nova transação
       </button>
+    </div>
+
+    <div>
+      
     </div>
     <table class="table table-striped">
     <thead>

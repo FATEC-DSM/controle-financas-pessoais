@@ -8,7 +8,7 @@ const idUsuario = sessao.user
 async function carregarCategorias() {
   try {
     const response = await fetch(
-      `http://localhost:8080/categories/${idUsuario}`
+      `https://backend-controle-financas-pessoais.vercel.app/categories/${idUsuario}`
     )
 
     const json = await response.json()
@@ -35,15 +35,18 @@ async function criarCategoria(event) {
     'Content-Type': 'application/json',
   })
 
-  const response = await fetch(`http://localhost:8080/categories`, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify({
-      userId: idUsuario,
-      name: nome,
-      description: descricao,
-    }),
-  })
+  const response = await fetch(
+    `https://backend-controle-financas-pessoais.vercel.app/categories`,
+    {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        userId: idUsuario,
+        name: nome,
+        description: descricao,
+      }),
+    }
+  )
 
   const json = await response.json()
 
