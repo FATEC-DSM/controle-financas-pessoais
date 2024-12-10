@@ -33,17 +33,6 @@ async function enviarForm(event) {
   }
 }
 
-function showAlerta(mensagem) {
-  const containerLogin = document.querySelector('[data-item="alerta"]')
-  containerLogin.classList.toggle('is-active')
-  containerLogin.innerHTML = mensagem
-
-  setTimeout(() => {
-    containerLogin.classList.toggle('is-active')
-    containerLogin.innerHTML = ''
-  }, 3000)
-}
-
 function guardarSessao(dados) {
   window.localStorage.setItem(
     'sessao',

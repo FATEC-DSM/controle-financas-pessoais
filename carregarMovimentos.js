@@ -1,5 +1,7 @@
 window.onload = carregarMovimentos
 
+let categorias
+
 async function carregarMovimentos() {
   try {
     let sessao = window.localStorage.getItem('sessao')
@@ -20,77 +22,71 @@ async function carregarMovimentos() {
     }).toString()
 
     const response = await fetch(`${a}/transactions/${id}?${filtro}`)
+    const responseCategorias = await fetch(`${a}/categories/${id}`)
 
     const json = await response.json()
+    const jsonCategorias = await responseCategorias.json()
+
+    categorias = jsonCategorias.body.categories
 
     if (!json.body.transactions.length) {
       return renderPrimeiraTransacao()
     }
 
     renderTransacoes(json.body.transactions)
+    renderModalTransacao()
   } catch (error) {
     console.error(error)
   }
 }
 
-function showAlerta(mensagem) {
-  const containerLogin = document.querySelector('[data-item="alerta"]')
-  containerLogin.classList.toggle('is-active')
-  containerLogin.innerHTML = mensagem
-
-  setTimeout(() => {
-    containerLogin.classList.toggle('is-active')
-    containerLogin.innerHTML = ''
-  }, 3000)
-}
-
-function renderModalTransacao() {
-  const main = document.querySelector('main')
-
-  main.innerHTML += `
+function renderModalTransacao(categorias) {
+  document.querySelector('[data-place="modal"]').innerHTML += `
     <div class="modal-body">
     <div class="modal fade" id="modalTransacao" tabindex="-1" aria-labelledby="modalMetasLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <form class="modal-content" onsubmit="criarTransacao(event)">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="modalMetasLabel"> Transações </h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-
-          <div class="modal-body">
-            <label for="t-data" class="form-label"> Data </label>
-            <input type="date" class="form-control" id="t-data" required>
-
-            <label for="t-descricao" class="form-label"> Descrição </label>
-            <input type="text" class="form-control" id="t-descricao" required>
-
-            <label for="t-valor" class="form-label"> Valor da meta </label>
-            <input type="number" class="form-control" id="t-valor" required>
-
-            <label for="t-tipo" class="form-label"> Tipo </label>
-            <select id="t-tipo" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
-              <option value="1" selected> Entrada</option>
-              <option value="2"> Saída</option>
-            </select>
-
-            <label for="t-categoria" class="form-label"> Categoria </label>
-            <select id="t-categoria" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
-              <option selected> ... </option>
-              <option value="1"> Carro </option>
-              <option value="2"> Casa </option>
-              <option value="3"> Financeira </option>
-            </select>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"> Cancelar</button>
-            <button type="submit" class="btn btn-success"> Criar </button>
-          </div>
-        </form>
+        ${formNovaTransacao()}
       </div>
     </div>
   </div>
   `
+}
+
+function formNovaTransacao() {
+  return `
+    <form class="modal-content p-3" onsubmit="criarTransacao(event)">
+      <label for="t-descricao" class="form-label mt-2"> Descrição </label>
+      <input type="text" class="form-control" id="t-descricao" required>
+
+      <div class="d-flex mt-2">
+        <div class="flex-grow-1">
+          <label for="t-valor" class="form-label"> Valor </label>
+          <input type="number" class="form-control" id="t-valor" required>
+        </div>
+        <div class="ms-2 flex-grow-1">
+          <label for="t-data" class="form-label"> Data </label>
+          <input type="date" max="${dataMaxima()}" class="form-control" id="t-data" required>
+        </div>
+      </div>
+
+      <label for="t-tipo" class="form-label mt-2"> Tipo </label>
+      <select id="t-tipo" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+        <option value="1" selected>Saída</option>
+        <option value="2">Entrada</option>
+      </select>
+
+      <label for="t-categoria" class="form-label"> Categoria </label>
+      <select id="t-categoria" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+        ${categorias.map(
+          categoria =>
+            `<option value="${categoria.Id_category}">${categoria.Name}</option>`
+        )}
+      </select>
+
+      <div class="modal-footer mt-2">
+        <button type="submit" class="btn btn-success px-4">Criar</button>
+      </div>
+    </form>`
 }
 
 async function criarTransacao(event) {
@@ -107,34 +103,34 @@ async function criarTransacao(event) {
 
   let id = sessao.user
 
-  console.log(id, categoria, tipo, valor, data, descricao)
-
   try {
     const headers = new Headers({
       'Content-Type': 'application/json',
     })
 
-    const response = await fetch(
-      'https://backend-controle-financas-pessoais.vercel.app/transactions',
-      {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          userId: String(id),
-          categoryId: categoria,
-          type: tipo,
-          amount: valor,
-          date: data,
-          description: descricao,
-        }),
-      }
-    )
+    const b = 'https://backend-controle-financas-pessoais.vercel.app'
+    const a = 'http://localhost:8080'
+
+    const response = await fetch(a + '/transactions', {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        userId: String(id),
+        categoryId: categoria,
+        type: tipo,
+        amount: valor,
+        date: data,
+        description: descricao,
+      }),
+    })
 
     const json = await response.json()
 
     if (json.status === 201) {
-      showAlerta('Transação criada')
+      showAlerta('Transação criada', 'alert-success')
     }
+
+    document.querySelector('body').classList.remove('modal-open')
   } catch (error) {
     console.error(error)
   }
@@ -144,6 +140,7 @@ function renderPrimeiraTransacao() {
   document.querySelector('main').innerHTML = `
     <div>
       <h2>Crie a sua primeira transação</h2>
+
       <p>
         Aqui, sua saúde financeira é prioridade. O Dinherize é a ferramenta ideal para quem quer entender melhor seus
         gastos e alcançar o controle financeiro de forma simples e inteligente. Nossa plataforma organiza suas despesas,
@@ -153,14 +150,10 @@ function renderPrimeiraTransacao() {
         Com o Dinherize, você transforma números em ações que fazem a diferença. Comece hoje mesmo a planejar,
         economizar e realizar seus objetivos.
       </p>
-      <p>Dinherize: seu dinheiro, suas escolhas, sua evolução!</p>
+
+      ${formNovaTransacao()}
     </div>
-    <button class="btn btn-primary" onclick="criarTransacao()" data-bs-toggle="modal"
-      data-bs-target="#modalTransacao">Criar
-      a minha primeira transação
-    </button>
-    `
-  renderModalTransacao()
+  `
 }
 
 function renderCarregando() {
@@ -172,35 +165,65 @@ function renderCarregando() {
   `
 }
 
+function formatarData(data) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    dateStyle: 'medium',
+  }).format(data)
+}
+
+function formatarValorMonetario(valor) {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(valor)
+}
+
+function dataMaxima() {
+  const hoje = new Intl.DateTimeFormat('pt-BR', {
+    dateStyle: 'short',
+  }).format()
+
+  const [dia, mes, ano] = hoje.split('/')
+
+  return `${ano}-${mes}-${dia}`
+}
+
 async function renderTransacoes(transacoes) {
   document.querySelector('main').innerHTML = `
+    <h2>Transações</h2>  
+
     <div>
-      <button type="button" onclick="mostraModalMetas()" id="#modalMetas" class="btn btn-primary" data-bs-toggle="modal"
-        data-bs-target="#modalMetas">
-        CRIAR CATEGORIA
+      <button type="button" id="#modalTransacao" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#modalTransacao">
+        Nova transação
       </button>
     </div>
     <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nome</th>
+        <th scope="col">Tipo</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Data</th>
         <th scope="col">Descrição</th>
       </tr>
     </thead>
     <tbody>
 
-    ${categorias.map(
-      (categoria, i) => `
+    ${transacoes.map(
+      (t, i) => `
         <tr>
           <td>${i}</td>
-          <td>${categoria.Description}</td>
-          <td>${categoria.Name}</td>
+          <td>${t.Type}</td>
+          <td>${t.Name_category}</td>
+          <td>${formatarValorMonetario(t.Amount)}</td>
+          <td>${formatarData(new Date(t.Transaction_date))}</td>
+          <td>${t.Description}</td>
         </tr>
       `
     )}
     </tbody>
   </table>
   `
-  renderModalCategoria()
 }

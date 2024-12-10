@@ -24,7 +24,7 @@ async function carregarCategorias() {
 }
 
 async function criarCategoria(event) {
-  event.preventDefault()
+  // event.preventDefault()
 
   const formData = new FormData(event.target)
 
