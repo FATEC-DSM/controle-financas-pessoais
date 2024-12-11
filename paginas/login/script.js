@@ -39,6 +39,7 @@ function guardarSessao(dados) {
     JSON.stringify({
       user: dados.Id_user,
       email: dados.Email,
+      nome: dados.Name,
       createdAt: new Date().getTime(),
     })
   )

@@ -13,9 +13,6 @@ function renderAlerta() {
       opacity: 1;
     }
     </style>
-
-    <div data-item="alerta" class="alert alert-warning alerta" role="alert">
-    </div>
   `
 }
 renderAlerta()

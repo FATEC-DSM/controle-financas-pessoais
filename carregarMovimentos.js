@@ -188,9 +188,13 @@ function dataMaxima() {
   return `${ano}-${mes}-${dia}`
 }
 
-async function renderTransacoes(transacoes) {
+function renderTransacoes(transacoes) {
   document.querySelector('main').innerHTML = `
     <h2>Transações</h2>  
+
+    <div class="d-flex align-items-center my-2">
+      <span>Estatística: </span> ${renderEstatisticas(transacoes)}
+    </div>
 
     <div>
       <button type="button" id="#modalTransacao" class="btn btn-primary" data-bs-toggle="modal"
@@ -199,8 +203,33 @@ async function renderTransacoes(transacoes) {
       </button>
     </div>
 
-    <div>
-      
+    <div class="mt-2">
+      <form onsubmit="filtrarTransacoes(event)">
+        <div class="d-flex align-items-end">
+          <div class="">
+            <label for="filtro-inicio" class="form-label mt-2"> Início </label>
+            <input type="date" max="${dataMaxima()}" name="dt-inicio" class="form-control" id="filtro-inicio" required>
+          </div>
+          <div class="ms-2">
+            <label for="filtro-fim" class="form-label mt-2"> Fim </label>
+            <input type="date" max="${dataMaxima()}" name="dt-fim" class="form-control" id="filtro-fim" required>
+          </div>
+
+          <div class="ms-2">
+            <label for="t-categoria" class="form-label"> Categoria </label>
+            <select id="t-categoria" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+              ${categorias.map(
+                categoria =>
+                  `<option value="${categoria.Id_category}">${categoria.Name}</option>`
+              )}
+            </select>
+          </div>
+          
+          <div class="ms-2">
+            <button type="submit" class="btn btn-primary px-4">Filtrar</button>
+          </div>
+        </div>
+      </form>
     </div>
     <table class="table table-striped">
     <thead>
@@ -211,6 +240,7 @@ async function renderTransacoes(transacoes) {
         <th scope="col">Valor</th>
         <th scope="col">Data</th>
         <th scope="col">Descrição</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -219,15 +249,73 @@ async function renderTransacoes(transacoes) {
       (t, i) => `
         <tr>
           <td>${i}</td>
-          <td>${t.Type}</td>
+          ${
+            t.Type == 1
+              ? '<td><span class="badge bg-primary">entrada</span></td>'
+              : '<td><span class="badge bg-secondary">saída</span></td>'
+          }
           <td>${t.Name_category}</td>
           <td>${formatarValorMonetario(t.Amount)}</td>
           <td>${formatarData(new Date(t.Transaction_date))}</td>
           <td>${t.Description}</td>
+          <td>
+            <button class="btn btn-danger" title="excluir" onclick="excluirTransacao(${
+              t.ID_transaction
+            })">
+              <ion-icon name="trash-outline"></ion-icon>
+            </button>
+          </td>
         </tr>
       `
     )}
     </tbody>
   </table>
+  `
+}
+
+async function excluirTransacao(id) {
+  const confirm = window.confirm(
+    'Tem certeza que deseja excluir essa transação?'
+  )
+
+  if (!confirm) {
+    return
+  }
+
+  const response = await fetch(
+    `https://backend-controle-financas-pessoais.vercel.app/transactions/${id}`,
+    {
+      method: 'DELETE',
+    }
+  )
+
+  carregarMovimentos()
+}
+
+function renderEstatisticas(transacoes) {
+  let entradas = 0
+  let saidas = 0
+  let total = 0
+
+  for (const transacao of transacoes) {
+    total += transacao.Amount
+
+    if (transacao.Type == 1) {
+      entradas += transacao.Amount
+    } else if (transacao.Type == 2) {
+      saidas += transacao.Amount
+    }
+  }
+
+  let entradaPercent = Math.round((entradas * 100) / total)
+  let saidaPercent = Math.round((saidas * 100) / total)
+
+  console.log(entradaPercent, saidaPercent)
+
+  return `
+  <div class="progress ms-2" style="max-width: 500px; width: 100%;">
+    <div class="progress-bar bg-primary" role="progressbar" style="width: ${entradaPercent}%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">${entradaPercent}%</div>
+    <div class="progress-bar bg-secondary" role="progressbar" style="width: ${saidaPercent}%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">${saidaPercent}%</div>
+  </div>
   `
 }

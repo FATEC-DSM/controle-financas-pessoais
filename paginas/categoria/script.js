@@ -24,7 +24,7 @@ async function carregarCategorias() {
 }
 
 async function criarCategoria(event) {
-  // event.preventDefault()
+  event.preventDefault()
 
   const formData = new FormData(event.target)
 
@@ -51,9 +51,9 @@ async function criarCategoria(event) {
   const json = await response.json()
 
   if (json.status === 201) {
-    window.alert('Transação criada')
+    window.alert('Categoria criada')
 
-    window.querySelector('body').classList.toggle('modal-open')
+    document.querySelector('body').classList.remove('modal-open')
     carregarCategorias()
   }
 }

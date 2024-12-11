@@ -1,4 +1,8 @@
 function renderCore() {
+  let sessao = window.localStorage.getItem('sessao')
+
+  sessao = JSON.parse(sessao)
+
   document.querySelector('body').innerHTML = `
       <input type="checkbox" id="check">
       <!-- header começo -->
@@ -9,16 +13,13 @@ function renderCore() {
           </label>
           <h3>Dinheirize</span></h3>
         </div>
-        <div class="right">
-          <a href="#" class="sair-btn" onclick="window.localStorage.removeItem('sessao')">Sair</a>
-        </div>
+        <a href="#" class="sair-btn" onclick="sair()">Sair</a>
       </header>
       <!-- header final -->
       <!-- inicio sidebar -->
       <div class="sidebar">
-        <div class="cabecalho-sidebar">
-          <img src="/img/foto-perfil.jpg" class="image" alt="Foto de perfil">
-          <h2>Mario</h2>
+        <div class="cabecalho-sidebar p-3">
+          <h2>Bem vindo(a) ${sessao.nome}</h2>
         </div>
         <div class="opcoes-sidebar">
           <a href="/index.html"><ion-icon name="home-outline"></ion-icon><span>Home</span></a>
@@ -29,3 +30,12 @@ function renderCore() {
     `
 }
 renderCore()
+
+function sair() {
+  const confirm = window.confirm('Tem certeza que deseja sair?')
+
+  if (confirm) {
+    window.localStorage.removeItem('sessao')
+    window.location.href = '/'
+  }
+}
