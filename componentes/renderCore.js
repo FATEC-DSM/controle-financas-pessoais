@@ -13,7 +13,7 @@ function renderCore() {
           </label>
           <h3>Dinheirize</span></h3>
         </div>
-        <a href="#" class="sair-btn" onclick="sair()">Sair</a>
+        <a href="#" class="btn btn-danger" onclick="sair()">Sair</a>
       </header>
       <!-- header final -->
       <!-- inicio sidebar -->
@@ -23,7 +23,6 @@ function renderCore() {
         </div>
         <div class="opcoes-sidebar">
           <a href="/index.html"><ion-icon name="home-outline"></ion-icon><span>Home</span></a>
-          <a href="/paginas/metas"><ion-icon name="rocket-outline"></ion-icon></ion-icon><span>Metas</span></a>
           <a href="/paginas/categoria"><ion-icon name="bar-chart-outline"></ion-icon><span> Categoria </span></a>
         </div>
       </div>

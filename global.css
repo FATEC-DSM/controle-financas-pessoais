@@ -85,15 +85,10 @@ header .left h3 {
 header .sair-btn {
   padding: 8px 12px;
 
-  background-color: var(--verde-escuro);
   text-decoration: none;
   color: #fff;
   border-radius: 3px;
   transition: 0.3s all;
-}
-
-header .sair-btn:hover {
-  background-color: var(--verde-claro);
 }
 
 /* Sidebar */

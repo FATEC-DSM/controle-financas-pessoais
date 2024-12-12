@@ -2,6 +2,11 @@ window.onload = carregarMovimentos
 
 let categorias
 
+let hoje = new Date().toISOString().split('T')[0]
+
+let minDate = '1970-01-01'
+let maxDate = hoje
+
 async function carregarMovimentos() {
   try {
     let sessao = window.localStorage.getItem('sessao')
@@ -11,18 +16,17 @@ async function carregarMovimentos() {
 
     renderCarregando()
 
-    const b = 'https://backend-controle-financas-pessoais.vercel.app'
-    const a = 'http://localhost:8080'
-
-    let hoje = new Date().toISOString().split('T')[0]
-
     const filtro = new URLSearchParams({
-      minDate: '1970-01-01',
-      maxDate: hoje,
+      minDate,
+      maxDate,
     }).toString()
 
-    const response = await fetch(`${b}/transactions/${id}?${filtro}`)
-    const responseCategorias = await fetch(`${b}/categories/${id}`)
+    const response = await fetch(
+      `https://backend-controle-financas-pessoais.vercel.app/transactions/${id}?${filtro}`
+    )
+    const responseCategorias = await fetch(
+      `https://backend-controle-financas-pessoais.vercel.app/categories/${id}`
+    )
 
     const json = await response.json()
     const jsonCategorias = await responseCategorias.json()
@@ -71,7 +75,7 @@ function formNovaTransacao() {
 
       <label for="t-tipo" class="form-label mt-2"> Tipo </label>
       <select id="t-tipo" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
-        <option value="1" selected>Saída</option>
+        <option value="1">Saída</option>
         <option value="2">Entrada</option>
       </select>
 
@@ -108,10 +112,7 @@ async function criarTransacao(event) {
       'Content-Type': 'application/json',
     })
 
-    const b = 'https://backend-controle-financas-pessoais.vercel.app'
-    const a = 'http://localhost:8080'
-
-    const response = await fetch(b + '/transactions', {
+    const response = await fetch('http://localhost:8080/transactions', {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -129,11 +130,11 @@ async function criarTransacao(event) {
     if (json.status === 201) {
       showAlerta('Transação criada', 'alert-success')
     }
-
-    document.querySelector('body').classList.remove('modal-open')
   } catch (error) {
     console.error(error)
   }
+
+  window.location.href = '/'
 }
 
 function renderPrimeiraTransacao() {
@@ -166,6 +167,7 @@ function renderCarregando() {
 }
 
 function formatarData(data) {
+  console.log(data)
   return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'medium',
   }).format(data)
@@ -203,34 +205,6 @@ function renderTransacoes(transacoes) {
       </button>
     </div>
 
-    <div class="mt-2">
-      <form onsubmit="filtrarTransacoes(event)">
-        <div class="d-flex align-items-end">
-          <div class="">
-            <label for="filtro-inicio" class="form-label mt-2"> Início </label>
-            <input type="date" max="${dataMaxima()}" name="dt-inicio" class="form-control" id="filtro-inicio" required>
-          </div>
-          <div class="ms-2">
-            <label for="filtro-fim" class="form-label mt-2"> Fim </label>
-            <input type="date" max="${dataMaxima()}" name="dt-fim" class="form-control" id="filtro-fim" required>
-          </div>
-
-          <div class="ms-2">
-            <label for="t-categoria" class="form-label"> Categoria </label>
-            <select id="t-categoria" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
-              ${categorias.map(
-                categoria =>
-                  `<option value="${categoria.Id_category}">${categoria.Name}</option>`
-              )}
-            </select>
-          </div>
-          
-          <div class="ms-2">
-            <button type="submit" class="btn btn-primary px-4">Filtrar</button>
-          </div>
-        </div>
-      </form>
-    </div>
     <table class="table table-striped">
     <thead>
       <tr>
@@ -251,8 +225,8 @@ function renderTransacoes(transacoes) {
           <td>${i}</td>
           ${
             t.Type == 1
-              ? '<td><span class="badge bg-primary">entrada</span></td>'
-              : '<td><span class="badge bg-secondary">saída</span></td>'
+              ? '<td><span class="badge bg-secondary">saída</span></td>'
+              : '<td><span class="badge bg-primary">entrada</span></td>'
           }
           <td>${t.Name_category}</td>
           <td>${formatarValorMonetario(t.Amount)}</td>
