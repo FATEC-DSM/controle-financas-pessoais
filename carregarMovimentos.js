@@ -2,11 +2,6 @@ window.onload = carregarMovimentos
 
 let categorias
 
-let hoje = new Date().toISOString().split('T')[0]
-
-let minDate = '1970-01-01'
-let maxDate = hoje
-
 async function carregarMovimentos() {
   try {
     let sessao = window.localStorage.getItem('sessao')
@@ -17,8 +12,8 @@ async function carregarMovimentos() {
     renderCarregando()
 
     const filtro = new URLSearchParams({
-      minDate,
-      maxDate,
+      minDate: '1970-01-01',
+      maxDate: new Date().toISOString().split('T')[0],
     }).toString()
 
     const response = await fetch(
@@ -112,18 +107,21 @@ async function criarTransacao(event) {
       'Content-Type': 'application/json',
     })
 
-    const response = await fetch('http://localhost:8080/transactions', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        userId: String(id),
-        categoryId: categoria,
-        type: tipo,
-        amount: valor,
-        date: data,
-        description: descricao,
-      }),
-    })
+    const response = await fetch(
+      'https://backend-controle-financas-pessoais.vercel.app/transactions',
+      {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          userId: String(id),
+          categoryId: categoria,
+          type: tipo,
+          amount: valor,
+          date: data,
+          description: descricao,
+        }),
+      }
+    )
 
     const json = await response.json()
 
@@ -167,7 +165,6 @@ function renderCarregando() {
 }
 
 function formatarData(data) {
-  console.log(data)
   return new Intl.DateTimeFormat('pt-BR', {
     dateStyle: 'medium',
   }).format(data)
@@ -274,17 +271,15 @@ function renderEstatisticas(transacoes) {
   for (const transacao of transacoes) {
     total += transacao.Amount
 
-    if (transacao.Type == 1) {
+    if (transacao.Type == 2) {
       entradas += transacao.Amount
-    } else if (transacao.Type == 2) {
+    } else if (transacao.Type == 1) {
       saidas += transacao.Amount
     }
   }
 
   let entradaPercent = Math.round((entradas * 100) / total)
   let saidaPercent = Math.round((saidas * 100) / total)
-
-  console.log(entradaPercent, saidaPercent)
 
   return `
   <div class="progress ms-2" style="max-width: 500px; width: 100%;">
